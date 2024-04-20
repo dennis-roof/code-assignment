@@ -5,13 +5,14 @@ import io.vertx.core.Promise
 import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
 import nl.infowijs.codeassignment.controllers.HealthController
+import nl.infowijs.codeassignment.controllers.MessagesController
 
 class MainVerticle : AbstractVerticle() {
   fun createRouter(vertx: Vertx) = Router.router(vertx).apply {
-//    val messagesController = MessagesController()
+    val messagesController = MessagesController()
+    
     get("/healthz").handler(HealthController.healthCheck)
-    // TODO: Implement this API later!
-//    get("/chat").handler(messagesController::listMessages)
+    get("/messages").handler(messagesController::listMessages)
   }
 
   override fun start(startPromise: Promise<Void>) {
