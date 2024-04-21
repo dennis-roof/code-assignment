@@ -15,7 +15,8 @@ fun initDummyMessages(): JsonArray {
     message = "Wie staat er dubbel geparkeerd in vak 14/15 met kenteken ZS-234-GA?\nIk kom mijn auto niet meer in...\n\nGraag je auto verplaatsen vóór 16:00 zodat ik weer naar huis kan!!!",
     datetime = Instant.now().minusSeconds(1500).truncatedTo(ChronoUnit.SECONDS),
     person = Person(
-      name = "Karen Monster",
+      firstname = "Karen",
+      lastname = "Monster",
       avatar = "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
     )
   ).toJsonObject())
@@ -24,7 +25,8 @@ fun initDummyMessages(): JsonArray {
     message = "Hallo collega's,\n\nzouden jullie in week 35 de hele week een parkeerplaats voor mij willen reserveren?\n\nDank!",
     datetime = Instant.now().minusSeconds(43200).truncatedTo(ChronoUnit.SECONDS),
     person = Person(
-      name = "Melanie de Vries",
+      firstname = "Melanie",
+      lastname = "de Vries",
       avatar = "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
     )
   ).toJsonObject())
@@ -52,7 +54,8 @@ class MessagesController {
       datetime = Instant.now().truncatedTo(ChronoUnit.SECONDS),
       // TODO: replace Person with currently logged in user
       person = Person(
-        name = "Myself",
+        firstname = "Myself",
+        lastname = "",
         avatar = "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
       )
     ).toJsonObject())

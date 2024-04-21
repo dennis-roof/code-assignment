@@ -9,7 +9,8 @@ class ContactsController {
   val contacts = Contacts.Companion.getContacts()
   
   fun listContacts(routingContext: RoutingContext) {
-    val contactsJson = JsonArray(contacts.map { it.toJsonObject() });
+    val contactSortedByLastName = contacts.sortedBy { it.lastname.uppercase() }
+    val contactsJson = JsonArray(contactSortedByLastName.map { it.toJsonObject() });
 
     WebResponse(routingContext).end(contactsJson)
   }
