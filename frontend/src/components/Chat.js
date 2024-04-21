@@ -6,7 +6,7 @@ import { config } from '../config';
 
 const getMessagesFromResponse = (response) => {
   if (response.data === undefined) {
-    return {message: '', error: response};
+    return {messages: '', error: 'could not retrieve messages'};
   }
 
   const messages = response.data.map(message => {

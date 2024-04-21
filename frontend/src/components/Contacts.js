@@ -2,29 +2,40 @@ import {
   MailIcon,
   PhoneIcon,
 } from '@heroicons/react/solid';
+import { useState, useEffect } from 'react';
+import { config } from '../config';
 
-const people = [
-  {
-    email: 'collega-a@bedrijf.nl',
-    name: 'Silvia van Buren',
-    title: 'Front Office',
-    imageUrl: 'https://randomuser.me/api/portraits/women/75.jpg',
-    telephone: '+31600000000',
-  },
-  {
-    email: 'hans@bedrijf.nl',
-    name: 'Hans van Willigen',
-    title: 'Lead Developer',
-    imageUrl: 'https://randomuser.me/api/portraits/men/75.jpg',
-    telephone: null,
-  },
-];
+const getContacts = (setContacts, setError) => {
+  return () => {
+    fetch(config.apiDomain + '/contacts')
+      .then(response => response.text())
+      .then((textBody) => {
+        try {
+          const jsonBody = JSON.parse(textBody);
+
+          if (jsonBody.data === undefined) {
+            setError('could not retrieve contacts');
+            return;
+          }
+  
+          setContacts(jsonBody.data);
+        } catch(err) {
+          setError(textBody);
+        }
+      });
+  };
+};
 
 export default function Contacts() {
+  const [contacts, setContacts] = useState([]);
+  const [error, setError] = useState('');
+
+  useEffect(getContacts(setContacts, setError), []);
+
   return (
     <ul role="list" className="grid m-4 grid-cols-1 space-y-4">
-      {people.map((person) => (
-        <li key={person.email} className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
+      {contacts.map((person) => (
+        <li key={person.name} className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
           <div className="w-full flex items-center justify-between p-6 space-x-6">
             <div className="flex-1 truncate">
               <div className="flex items-center space-x-3">
@@ -36,7 +47,7 @@ export default function Contacts() {
               </div>
               <p className="mt-1 text-gray-500 text-sm truncate">{person.title}</p>
             </div>
-            <img className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src={person.imageUrl} alt="" />
+            <img className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src={person.avatar} alt="" />
           </div>
           <div>
             <div className="-mt-px flex divide-x divide-gray-200">
@@ -50,8 +61,8 @@ export default function Contacts() {
                 </a>
               </div>
               <div className="-ml-px w-0 flex-1 flex">
-                {person.telephone && <a
-                  href={`tel:${person.telephone}`}
+                {person.phone && <a
+                  href={`tel:${person.phone}`}
                   className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
                 >
                   <PhoneIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
