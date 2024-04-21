@@ -12,6 +12,10 @@ data class Person(val name: String, val avatar: String, val email: String? = nul
           this.put("email", email)
         }
       }
-      .put("phone", phone)
+      .apply {
+        if(phone !== null && Regex("\\+?[0-9\\-]{10,13}$").matches(StringBuffer(phone))) {
+          this.put("phone", phone)
+        }
+      }
   }
 }
